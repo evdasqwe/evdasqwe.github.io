@@ -15,6 +15,44 @@
     </entry>
     
     
+    
+    <entry>
+      <title>Linux下一些常用的应急响应命令</title>
+      <link href="/2023/10/05/Linux%E4%B8%8B%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%91%BD%E4%BB%A4/"/>
+      <url>/2023/10/05/Linux%E4%B8%8B%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%91%BD%E4%BB%A4/</url>
+      
+        <content type="html"><![CDATA[<p>本文记录几个常用的Linux的应急响应命令</p><span id="more"></span><h3 id="最近2分钟修改过的文件"><a href="#最近2分钟修改过的文件" class="headerlink" title="最近2分钟修改过的文件"></a>最近2分钟修改过的文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -mmin -2</span><br></pre></td></tr></table></figure><h3 id="最近2分钟修改过的文件并匹配关注的文件"><a href="#最近2分钟修改过的文件并匹配关注的文件" class="headerlink" title="最近2分钟修改过的文件并匹配关注的文件"></a>最近2分钟修改过的文件并匹配关注的文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -mmin -2 | grep 关键字</span><br></pre></td></tr></table></figure><h3 id="查看文件的修改时间"><a href="#查看文件的修改时间" class="headerlink" title="查看文件的修改时间"></a>查看文件的修改时间</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls --full-time 文件名</span><br></pre></td></tr></table></figure><h3 id="Linux下查看文件的哈希值"><a href="#Linux下查看文件的哈希值" class="headerlink" title="Linux下查看文件的哈希值"></a>Linux下查看文件的哈希值</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">md5sum 文件名</span><br></pre></td></tr></table></figure><h3 id="windows下查看文件的哈希值"><a href="#windows下查看文件的哈希值" class="headerlink" title="windows下查看文件的哈希值"></a>windows下查看文件的哈希值</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil -hashfile 文件名</span><br></pre></td></tr></table></figure><h3 id="对一个文件的日志进行统计"><a href="#对一个文件的日志进行统计" class="headerlink" title="对一个文件的日志进行统计"></a>对一个文件的日志进行统计</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat 文件名 | grep 关键字 | wc -l</span><br></pre></td></tr></table></figure><h3 id="查看正在监听的端口"><a href="#查看正在监听的端口" class="headerlink" title="查看正在监听的端口"></a>查看正在监听的端口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ntplu</span><br></pre></td></tr></table></figure><h3 id="查看开机启动的服务"><a href="#查看开机启动的服务" class="headerlink" title="查看开机启动的服务"></a>查看开机启动的服务</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files</span><br></pre></td></tr></table></figure><h3 id="查看环境变量"><a href="#查看环境变量" class="headerlink" title="查看环境变量"></a>查看环境变量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $PATH</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 应急响应 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>扫描神器-Fscan</title>
+      <link href="/2023/10/04/%E6%89%AB%E6%8F%8F%E7%A5%9E%E5%99%A8-Fscan/"/>
+      <url>/2023/10/04/%E6%89%AB%E6%8F%8F%E7%A5%9E%E5%99%A8-Fscan/</url>
+      
+        <content type="html"><![CDATA[<p>平时对Fscan的用法就只有Fscan -h ip，在一次实战中，由于对Fscan的用法不够熟悉，导致效率大大降低，今天梳理一下Fscan的几个详细用法。</p><span id="more"></span><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="h"><a href="#h" class="headerlink" title="-h"></a>-h</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-h 指定扫描的目标IP</span><br></pre></td></tr></table></figure><h3 id="p"><a href="#p" class="headerlink" title="-p"></a>-p</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-p 1-65535 指定扫描的端口</span><br></pre></td></tr></table></figure><h3 id="nobr"><a href="#nobr" class="headerlink" title="-nobr"></a>-nobr</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-nobr 指扫描时跳过sql、ftp、ssh等爆破</span><br></pre></td></tr></table></figure><h3 id="np"><a href="#np" class="headerlink" title="-np"></a>-np</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-np 指扫描时跳过存活检测</span><br></pre></td></tr></table></figure><h3 id="nopoc"><a href="#nopoc" class="headerlink" title="-nopoc"></a>-nopoc</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-nopoc 指扫描时跳过web poc扫描</span><br></pre></td></tr></table></figure><h3 id="proxy"><a href="#proxy" class="headerlink" title="-proxy"></a>-proxy</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-proxy http://127.0.0.1:9999 指扫描时可以设置代理，可以和bp一起联动使用</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Fscan </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
   
   
 </search>
