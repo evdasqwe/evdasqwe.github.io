@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>木马病毒告警问题</title>
+      <link href="/2023/10/18/%E6%9C%A8%E9%A9%AC%E7%97%85%E6%AF%92%E5%91%8A%E8%AD%A6%E9%97%AE%E9%A2%98/"/>
+      <url>/2023/10/18/%E6%9C%A8%E9%A9%AC%E7%97%85%E6%AF%92%E5%91%8A%E8%AD%A6%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<p>本文用简短的几句话来描述在杀软实时监测下的主机触发木马病毒被态势感知告警的问题</p><span id="more"></span><h3 id="问题的起因"><a href="#问题的起因" class="headerlink" title="问题的起因"></a>问题的起因</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在向领导汇报的时候，领导突然问了一句，杀软是实时监测主机的，如果有木马病毒触发告警，应该第一时间被查杀掉了呀，既然被查杀掉了，为什么态势感知这边还是会告警呢？由于我就是个菜鸡，一下子就被问住了，正当气氛即将要尴尬起来的时候，我旁边的老师傅开始解释了起来...</span><br></pre></td></tr></table></figure><h3 id="为什么态势感知还是会触发告警"><a href="#为什么态势感知还是会触发告警" class="headerlink" title="为什么态势感知还是会触发告警"></a>为什么态势感知还是会触发告警</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">老师傅对领导说，杀软实时监测的是主机上正在运行的程序，并非该主机上的所有文件。当杀软在对主机上面做全盘查杀的时候，才会对主机上的所有文件进行扫描。当一个木马病毒运行起来的时候，并且做出了一些可疑的动作，比如去外联一个地址，做出这些动作的时候，杀软监测到了，马上对该木马病毒进行查杀，同时这个时候，外联地址这个动作也会产生对应的流量，当流量走向态势感知的时候，态势分析出了该流量存在恶意IP、域名，或者恶意动作，即就触发了告警。</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 常见问题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2023/10/11/hello-world/"/>
       <url>/2023/10/11/hello-world/</url>
