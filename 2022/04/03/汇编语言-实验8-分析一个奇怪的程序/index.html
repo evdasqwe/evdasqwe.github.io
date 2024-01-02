@@ -6,17 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="一个记录学习与生活的博客">
+    <meta name="description" content="开始看了很久，感觉应该是不能正常返回的，但经过看前文和向老师提问，最后可以理解这个程序了。下面我将分享我对这个实验8的理解。程序的进入肯定是start，一开始你会发现两个nop指令，你可以把它理解为什么都不做，但是会占用执行一个指令的时间，然后就是将s2处的初始指令复制到s处的操作了，先将di,si分别存储s，s2的偏移地址，然后利用ax作为中介，将s2处的指令复制到s处。mov cs:[di],">
 <meta property="og:type" content="article">
 <meta property="og:title" content="汇编语言 实验8 分析一个奇怪的程序">
 <meta property="og:url" content="http://example.com/2022/04/03/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80-%E5%AE%9E%E9%AA%8C8-%E5%88%86%E6%9E%90%E4%B8%80%E4%B8%AA%E5%A5%87%E6%80%AA%E7%9A%84%E7%A8%8B%E5%BA%8F/index.html">
 <meta property="og:site_name" content="Reweber">
-<meta property="og:description" content="一个记录学习与生活的博客">
+<meta property="og:description" content="开始看了很久，感觉应该是不能正常返回的，但经过看前文和向老师提问，最后可以理解这个程序了。下面我将分享我对这个实验8的理解。程序的进入肯定是start，一开始你会发现两个nop指令，你可以把它理解为什么都不做，但是会占用执行一个指令的时间，然后就是将s2处的初始指令复制到s处的操作了，先将di,si分别存储s，s2的偏移地址，然后利用ax作为中介，将s2处的指令复制到s处。mov cs:[di],">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/12230a3dafedfe801.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/228ef64c5fc2f2bea.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/3101d3b084a5a5012.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/4c0d1b0b585cf6515.png">
 <meta property="article:published_time" content="2022-04-02T17:19:09.000Z">
-<meta property="article:modified_time" content="2024-01-02T17:22:49.719Z">
+<meta property="article:modified_time" content="2024-01-02T17:30:13.991Z">
 <meta property="article:author" content="Reweber">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.z4a.net/images/2024/01/03/12230a3dafedfe801.png">
     
     
       
@@ -79,7 +84,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/2022/11/27/CobaltStrike%E6%B3%A8%E5%85%A5MSF%E4%BC%9A%E8%AF%9D/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/2022/09/15/VS2019-%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80%E6%BA%90%E6%96%87%E4%BB%B6%E2%80%9Cstdafx-h%E2%80%9C-%E9%97%AE%E9%A2%98/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" aria-label="Next post" href="/2021/04/13/BUU-Reverse-%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%9Aeasyre/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -148,7 +153,12 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    
+    <p>开始看了很久，感觉应该是不能正常返回的，但经过看前文和向老师提问，最后可以理解这个程序了。下面我将分享我对这个实验8的理解。<br>程序的进入肯定是start，一开始你会发现两个nop指令，你可以把它理解为什么都不做，但是会占用执行一个指令的时间，然后就是将s2处的初始指令复制到s处的操作了，先将di,si分别存储s，s2的偏移地址，然后利用ax作为中介，将s2处的指令复制到s处。mov cs:[di],ax这个操作大家一定要看懂，要看懂ax里面到底存储的什么，这个就是这个实验的关键之处。我们先看，s2处的指令，jmp short s1，大家都应该知道jmp这个操作，在cpu里面，是没有目的地址这个数据的，只有转移的位移，位移怎么计算呢？以jmp short s1为列子： 位移&#x3D;s1处的地址 - (jmp short s1)下一个指令的地址<br><img src="https://www.z4a.net/images/2024/01/03/12230a3dafedfe801.png" alt="12230a3dafedfe801.png"></p>
+<p>这个实验里面位移 &#x3D; s1的地址(076A:0018) - (jmp short s1)后一个指令的地址(076A:0022) ，计算结果为-A,也是10进制的-10，但是cpu里面存储的数据都是以补码的形式出现的，所以我们应该将-10转化为补码形式，大家知道怎么转换吗？不知道的看这里，有一个结论，正数的补码取反加一就是其对应负数的补码，10的二进制表示为00001010，取反加一之后就是11110110，这就是-10的补码11110110，再转化为16进制就是F6。也可以看到上面图片的EB F6。</p>
+<p>执行mov cs:[di],ax之后，程序进入s0执行jmp short s，就是跳回原处。但是现在的s处开始的指令已经改变了，以前开始的指令是nop<br><img src="https://www.z4a.net/images/2024/01/03/228ef64c5fc2f2bea.png" alt="228ef64c5fc2f2bea.png"></p>
+<p>但是现在就是刚刚复制的EB F6,一个nop 指令占一个字节，但是EB F6占两个字节，所以EB F6会将之前的两个nop 覆盖掉。<br><img src="https://www.z4a.net/images/2024/01/03/3101d3b084a5a5012.png" alt="3101d3b084a5a5012.png"></p>
+<p>所以，你跳转到s，s执行的指令是EB F6，也就是执行从EB F6 的下一个指令mov di，offset s开始，向前跳10个字节(负数肯定是向前跳)<br>很巧的是，从下一个指令开始向前跳10个字节，恰好是mov ax,4c00H,也就是说程序可以正常返回。<br><img src="https://www.z4a.net/images/2024/01/03/4c0d1b0b585cf6515.png" alt="4c0d1b0b585cf6515.png"></p>
+
   </div>
 </article>
 
