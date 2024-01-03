@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="第一步.先确定自己的权限是不是系统权限如果你得到meterpreter之后，不是系统权限，那么就不能创建新的用户，到后面你就会得到一个权限不足的提示。  如下图  那就先查看自己的权限，getuid   我这个可能不是系统的权限，就需要进行提权，输入 getsystem  很不幸，如果执行之后报错   那就需要再换一个方法，输入bg，进入后台管理模式，并且记住这个session 1    然后这里">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后渗透之创建新用户(Windows平台)">
+<meta property="og:url" content="http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/index.html">
+<meta property="og:site_name" content="Reweber">
+<meta property="og:description" content="第一步.先确定自己的权限是不是系统权限如果你得到meterpreter之后，不是系统权限，那么就不能创建新的用户，到后面你就会得到一个权限不足的提示。  如下图  那就先查看自己的权限，getuid   我这个可能不是系统的权限，就需要进行提权，输入 getsystem  很不幸，如果执行之后报错   那就需要再换一个方法，输入bg，进入后台管理模式，并且记住这个session 1    然后这里">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/159685e16190c7e8f.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/217f23ee828b4b7ac.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/3366cf785d42cdac9.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/4b85208506fd688e9.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/54ab15dd49b0c43a2.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/6a100c336831a70ce.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/76dbfb6dfc3c7df7f.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/84943a2fbc840594d.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/9d0ada192fcfa9796.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/10460b15fece62af03.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/11d935cb0d24b8e930.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/1273e3585e078170c0.png">
+<meta property="article:published_time" content="2022-10-03T09:47:38.000Z">
+<meta property="article:modified_time" content="2024-01-03T09:59:57.325Z">
+<meta property="article:author" content="Reweber">
+<meta property="article:tag" content="后渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.z4a.net/images/2024/01/03/159685e16190c7e8f.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>后渗透之创建新用户(Windows平台)</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/11/27/CobaltStrike%E6%B3%A8%E5%85%A5MSF%E4%BC%9A%E8%AF%9D/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/09/15/VS2019-%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80%E6%BA%90%E6%96%87%E4%BB%B6%E2%80%9Cstdafx-h%E2%80%9C-%E9%97%AE%E9%A2%98/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&text=后渗透之创建新用户(Windows平台)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&title=后渗透之创建新用户(Windows平台)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&is_video=false&description=后渗透之创建新用户(Windows平台)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=后渗透之创建新用户(Windows平台)&body=Check out this article: http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&title=后渗透之创建新用户(Windows平台)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&title=后渗透之创建新用户(Windows平台)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&title=后渗透之创建新用户(Windows平台)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&title=后渗透之创建新用户(Windows平台)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&name=后渗透之创建新用户(Windows平台)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&t=后渗透之创建新用户(Windows平台)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%85%88%E7%A1%AE%E5%AE%9A%E8%87%AA%E5%B7%B1%E7%9A%84%E6%9D%83%E9%99%90%E6%98%AF%E4%B8%8D%E6%98%AF%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90"><span class="toc-number">1.</span> <span class="toc-text">第一步.先确定自己的权限是不是系统权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E7%94%A8%E6%88%B7"><span class="toc-number">2.</span> <span class="toc-text">创建一个新的用户</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        后渗透之创建新用户(Windows平台)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Reweber</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-10-03T09:47:38.000Z" class="dt-published" itemprop="datePublished">2022-10-03</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%90%8E%E6%B8%97%E9%80%8F/" rel="tag">后渗透</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h3 id="第一步-先确定自己的权限是不是系统权限"><a href="#第一步-先确定自己的权限是不是系统权限" class="headerlink" title="第一步.先确定自己的权限是不是系统权限"></a>第一步.先确定自己的权限是不是系统权限</h3><p>如果你得到meterpreter之后，不是系统权限，那么就不能创建新的用户，到后面你就会得到一个权限不足的提示。</p>
+<p> 如下图<br> <img src="https://www.z4a.net/images/2024/01/03/159685e16190c7e8f.png" alt="159685e16190c7e8f.png"><br> 那就先查看自己的权限，getuid<br> <img src="https://www.z4a.net/images/2024/01/03/217f23ee828b4b7ac.png" alt="217f23ee828b4b7ac.png"><br>  我这个可能不是系统的权限，就需要进行提权，输入 getsystem</p>
+<p> 很不幸，如果执行之后报错<br> <img src="https://www.z4a.net/images/2024/01/03/3366cf785d42cdac9.png" alt="3366cf785d42cdac9.png"><br>  那就需要再换一个方法，输入bg，进入后台管理模式，并且记住这个session 1<br>  <img src="https://www.z4a.net/images/2024/01/03/4b85208506fd688e9.png" alt="4b85208506fd688e9.png"><br>  然后这里还需要用到 exploit&#x2F;windows&#x2F;local&#x2F;ask<br>  <img src="https://www.z4a.net/images/2024/01/03/54ab15dd49b0c43a2.png" alt="54ab15dd49b0c43a2.png"><br>  看看它的选项 options<br>  <img src="https://www.z4a.net/images/2024/01/03/6a100c336831a70ce.png" alt="6a100c336831a70ce.png"><br>  这里的ip是监听机的ip， 我原来的session是1，而且端口是7777</p>
+<p>  只需要设置 set session 1和 set lport 7777即可<br>  <img src="https://www.z4a.net/images/2024/01/03/76dbfb6dfc3c7df7f.png" alt="76dbfb6dfc3c7df7f.png"><br>  然后run，然后靶机会有个弹窗需要你确认，点击是即可(可能你觉得这个弹窗很低级，一般人谁会去点这个，但是刚才的设置里面是有一个filename选项的，它可以替换成任意的内容，比如QQ，这样的话，你点击的概率会大大提高)<br>  <img src="https://www.z4a.net/images/2024/01/03/84943a2fbc840594d.png" alt="84943a2fbc840594d.png"><br>  之后返回的meterpreter就是系统权限了<br>  <img src="https://www.z4a.net/images/2024/01/03/9d0ada192fcfa9796.png" alt="9d0ada192fcfa9796.png"></p>
+<h3 id="创建一个新的用户"><a href="#创建一个新的用户" class="headerlink" title="创建一个新的用户"></a>创建一个新的用户</h3><p>  如果你输入命令 run getgui -u 用户名 -p 密码,不能创建的话，如下图<br>  <img src="https://www.z4a.net/images/2024/01/03/10460b15fece62af03.png" alt="10460b15fece62af03.png"><br>  就用 run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp USERNAME&#x3D;用户名 PASSWORD&#x3D;密码，这个指令更加稳定，下图是执行成功了<br>  <img src="https://www.z4a.net/images/2024/01/03/11d935cb0d24b8e930.png" alt="11d935cb0d24b8e930.png"><br>  去靶机上面查看，Win+R输入netplwiz，发现成功创建！<br>  <img src="https://www.z4a.net/images/2024/01/03/1273e3585e078170c0.png" alt="1273e3585e078170c0.png"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%85%88%E7%A1%AE%E5%AE%9A%E8%87%AA%E5%B7%B1%E7%9A%84%E6%9D%83%E9%99%90%E6%98%AF%E4%B8%8D%E6%98%AF%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90"><span class="toc-number">1.</span> <span class="toc-text">第一步.先确定自己的权限是不是系统权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E7%94%A8%E6%88%B7"><span class="toc-number">2.</span> <span class="toc-text">创建一个新的用户</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&text=后渗透之创建新用户(Windows平台)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&title=后渗透之创建新用户(Windows平台)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&is_video=false&description=后渗透之创建新用户(Windows平台)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=后渗透之创建新用户(Windows平台)&body=Check out this article: http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&title=后渗透之创建新用户(Windows平台)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&title=后渗透之创建新用户(Windows平台)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&title=后渗透之创建新用户(Windows平台)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&title=后渗透之创建新用户(Windows平台)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&name=后渗透之创建新用户(Windows平台)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/10/03/%E5%90%8E%E6%B8%97%E9%80%8F%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7-Windows%E5%B9%B3%E5%8F%B0/&t=后渗透之创建新用户(Windows平台)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+      <div class="footer-left">
+        Copyright &copy;
+        
+        
+        2021-2024
+        Reweber
+      </div>
+      <div class="footer-right">
+        <nav>
+          <ul>
+            <!--
+          --><li><a href="/">Home</a></li><!--
+        --><!--
+          --><li><a href="/archives/">Writing</a></li><!--
+        --><!--
+          --><li><a href="/search/">Search</a></li><!--
+        -->
+          </ul>
+          <ul>
+            
+          </ul>
+        </nav>
+      </div>
+      
+</footer>
+
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
