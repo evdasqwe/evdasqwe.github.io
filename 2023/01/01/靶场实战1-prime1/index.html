@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="大纲 一.信息收集Prime_1 目标，获取靶机root权限 开启之后，得到用户名victor，但是不知道密码(是需要我们自己提取权限) 可以看到一个提示，find password.txt file in my directory ####1.主机发现和端口扫描 可以知道这台主机的网段 C段地址 192.168.200.0&#x2F;24 (子网掩码24表示最后8位是不确定的) Namp -sP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="靶场实战1-prime1">
+<meta property="og:url" content="http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/index.html">
+<meta property="og:site_name" content="Reweber">
+<meta property="og:description" content="大纲 一.信息收集Prime_1 目标，获取靶机root权限 开启之后，得到用户名victor，但是不知道密码(是需要我们自己提取权限) 可以看到一个提示，find password.txt file in my directory ####1.主机发现和端口扫描 可以知道这台主机的网段 C段地址 192.168.200.0&#x2F;24 (子网掩码24表示最后8位是不确定的) Namp -sP">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/15b64f7d07f5a6c00.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/24933d86a23c3fe00.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/38db5bdb4d0bbcf65.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/484800bc677abeb31.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/55e1fe265dbc431b2.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/61c7a882811922846.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/7966d8b5a9599e0b5.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/82899f6f64f126fd9.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/93ae7f66e1b48af8f.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/109bcf8fa5a097ac79.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/11679b6c81115f9b2d.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/12ddebe5d0c5464464.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/133bb1844ed91c04c3.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/144dd0959becc3862a.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/15b8368caffefd85de.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/16e0018128ea0263b9.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/1712427d3f2a0a52e0.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/1865273df827f853bb.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/193ca36372f1b5949d.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/20e0bca415d291c63f.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/2129f6cbb185ab0cb0.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/2246a388c0203a861d.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/2362214061a8426820.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/24.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/25.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/26.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/27.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/28.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/29.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/30.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/31.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/32.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/33.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/34.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/35.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/37.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/38.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/39.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/40.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/41.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/42.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/43.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/44.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/45.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/46.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/47.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/48.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/49.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/50.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/51.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/52.png">
+<meta property="og:image" content="https://www.z4a.net/images/2024/01/03/53.png">
+<meta property="article:published_time" content="2023-01-01T05:58:18.000Z">
+<meta property="article:modified_time" content="2024-01-03T08:29:38.150Z">
+<meta property="article:author" content="Reweber">
+<meta property="article:tag" content="靶场练习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.z4a.net/images/2024/01/03/15b64f7d07f5a6c00.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>靶场实战1-prime1</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/10/04/%E6%89%AB%E6%8F%8F%E7%A5%9E%E5%99%A8-Fscan/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/11/30/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BDNSLog%E6%B3%A8%E5%85%A5/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&text=靶场实战1-prime1"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&title=靶场实战1-prime1"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&is_video=false&description=靶场实战1-prime1"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=靶场实战1-prime1&body=Check out this article: http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&title=靶场实战1-prime1"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&title=靶场实战1-prime1"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&title=靶场实战1-prime1"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&title=靶场实战1-prime1"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&name=靶场实战1-prime1&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&t=靶场实战1-prime1"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E7%BA%B2"><span class="toc-number">1.</span> <span class="toc-text">大纲</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">2.</span> <span class="toc-text">一.信息收集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95"><span class="toc-number">3.</span> <span class="toc-text">二.渗透测试</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        靶场实战1-prime1
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Reweber</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-01T05:58:18.000Z" class="dt-published" itemprop="datePublished">2023-01-01</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/" rel="tag">靶场练习</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><p><img src="https://www.z4a.net/images/2024/01/03/15b64f7d07f5a6c00.png" alt="15b64f7d07f5a6c00.png"></p>
+<h3 id="一-信息收集"><a href="#一-信息收集" class="headerlink" title="一.信息收集"></a>一.信息收集</h3><p>Prime_1</p>
+<p>目标，获取靶机root权限</p>
+<p>开启之后，得到用户名victor，但是不知道密码(是需要我们自己提取权限)<br><img src="https://www.z4a.net/images/2024/01/03/24933d86a23c3fe00.png" alt="24933d86a23c3fe00.png"></p>
+<p>可以看到一个提示，find password.txt file in my directory</p>
+<p>####1.主机发现和端口扫描</p>
+<p>可以知道这台主机的网段<br><img src="https://www.z4a.net/images/2024/01/03/38db5bdb4d0bbcf65.png" alt="38db5bdb4d0bbcf65.png"></p>
+<p>C段地址</p>
+<p>192.168.200.0&#x2F;24 (子网掩码24表示最后8位是不确定的)</p>
+<p>Namp -sP 192.168.200.1&#x2F;24(用Ping的方式进行扫描)</p>
+<p><img src="https://www.z4a.net/images/2024/01/03/484800bc677abeb31.png" alt="484800bc677abeb31.png"></p>
+<p>由此可以确定目标为192.168.200.129</p>
+<p>也可以看看MAC地址，发现完全吻合<br><img src="https://www.z4a.net/images/2024/01/03/55e1fe265dbc431b2.png" alt="55e1fe265dbc431b2.png"></p>
+<p>也可以用 arp-scan -l<br><img src="https://www.z4a.net/images/2024/01/03/61c7a882811922846.png" alt="61c7a882811922846.png"></p>
+<p>或者 netdiscover -I eth0 -r 192.168.200.1&#x2F;24<br><img src="https://www.z4a.net/images/2024/01/03/7966d8b5a9599e0b5.png" alt="7966d8b5a9599e0b5.png"></p>
+<p>再进行端口扫描，确定其运行的程序</p>
+<p>Nmap -p 1-65535 -A 192.168.200.129，发现22和80端口<br><img src="https://www.z4a.net/images/2024/01/03/82899f6f64f126fd9.png" alt="82899f6f64f126fd9.png"></p>
+<p>先从80端口开始</p>
+<p>访问一下<br><img src="https://www.z4a.net/images/2024/01/03/93ae7f66e1b48af8f.png" alt="93ae7f66e1b48af8f.png"></p>
+<p>就一张图片<br>需要目录扫描<br><img src="https://www.z4a.net/images/2024/01/03/109bcf8fa5a097ac79.png" alt="109bcf8fa5a097ac79.png"></p>
+<p>看看，看来需要进一步挖掘<br><img src="https://www.z4a.net/images/2024/01/03/11679b6c81115f9b2d.png" alt="11679b6c81115f9b2d.png"></p>
+<p>则进行更加具体的目录扫描，加了扩展名<br><img src="https://www.z4a.net/images/2024/01/03/12ddebe5d0c5464464.png" alt="12ddebe5d0c5464464.png"></p>
+<p><img src="https://www.z4a.net/images/2024/01/03/133bb1844ed91c04c3.png" alt="133bb1844ed91c04c3.png"><br>FUZZ指<a target="_blank" rel="noopener" href="http://192.168.200.129/index.php%E7%9A%84%E5%90%8E%E9%9D%A2%E6%88%96%E8%AE%B8%E8%BF%98%E6%9C%89%E5%8F%82%E6%95%B0%E6%AF%94%E5%A6%82?parm=%E2%80%A6">http://192.168.200.129/index.php的后面或许还有参数比如?parm=…</a></p>
+<p>可以用来找参数、目录扫描、密码暴力破解、找出被过滤的关键字、压力测试<br><img src="https://www.z4a.net/images/2024/01/03/144dd0959becc3862a.png" alt="144dd0959becc3862a.png"><br><img src="https://www.z4a.net/images/2024/01/03/15b8368caffefd85de.png" alt="15b8368caffefd85de.png"><br>7L是HTTP响应内容的行数</p>
+<p>12W是有多有个词，包括空格</p>
+<p>136Ch指有多少字符</p>
+<p>那么需要过滤一些参数，可以得到不同的结果，可能就是需要找的内容</p>
+<p><img src="https://www.z4a.net/images/2024/01/03/16e0018128ea0263b9.png" alt="16e0018128ea0263b9.png"><br><img src="https://www.z4a.net/images/2024/01/03/1712427d3f2a0a52e0.png" alt="1712427d3f2a0a52e0.png"></p>
+<p>得到一个file参数，提示文件名不对<br><img src="https://www.z4a.net/images/2024/01/03/1865273df827f853bb.png" alt="1865273df827f853bb.png"></p>
+<p>想起了本地文件包含漏洞</p>
+<p>如果想得到正确的文件名，可以继续FUZZ</p>
+<p>但是也有前面的提示<br><img src="https://www.z4a.net/images/2024/01/03/193ca36372f1b5949d.png" alt="193ca36372f1b5949d.png"></p>
+<p><img src="https://www.z4a.net/images/2024/01/03/20e0bca415d291c63f.png" alt="20e0bca415d291c63f.png"></p>
+<p>用 secrettier360 这个参数，在别的php文件里面FUZZ下<br><img src="https://www.z4a.net/images/2024/01/03/2129f6cbb185ab0cb0.png" alt="2129f6cbb185ab0cb0.png"></p>
+<p>但是，文件名是啥呢？</p>
+<p>这是一个Ubantu的操作系统，它常见的敏感文件有哪些呢？</p>
+<p>&#x2F;etc&#x2F;password<br><img src="https://www.z4a.net/images/2024/01/03/2246a388c0203a861d.png" alt="2246a388c0203a861d.png"></p>
+<p>有点乱，在kali里面看看<br><img src="https://www.z4a.net/images/2024/01/03/2362214061a8426820.png" alt="2362214061a8426820.png"></p>
+<p>但是密码都是x，真正的密码，在&#x2F;ect&#x2F;shadow里面的，这里，&#x2F;etc&#x2F;shadow是不能访问的</p>
+<p>这个时候，仔细看<br><img src="https://www.z4a.net/images/2024/01/03/24.png" alt="24.png"><br>这不是这个提示吗？<br><img src="https://www.z4a.net/images/2024/01/03/25.png" alt="25.png"><br><img src="https://www.z4a.net/images/2024/01/03/26.png" alt="26.png"></p>
+<p>得到字符串 follow_the_ippsec</p>
+<p>但，这个密码是在web里面找到的，是什么的密码呢？</p>
+<p>不是系统的登录密码，排除SSH<br><img src="https://www.z4a.net/images/2024/01/03/27.png" alt="27.png"><br>刚才不是扫出来了一个 Wordpress吗？<br>找到登录框，进行登录<br><img src="https://www.z4a.net/images/2024/01/03/28.png" alt="28.png"><br>问题又来了，现在知道密码，那用户名是啥呢？<br><img src="https://www.z4a.net/images/2024/01/03/29.png" alt="29.png"><br><img src="https://www.z4a.net/images/2024/01/03/30.png" alt="30.png"><br>可以用工具cmseek，是一个指纹识别工具，附带用户枚举的功能</p>
+<p>但是，这里没有出现<br><img src="https://www.z4a.net/images/2024/01/03/31.png" alt="31.png"><br>用wpscan<br><img src="https://www.z4a.net/images/2024/01/03/32.png" alt="32.png"><br><img src="https://www.z4a.net/images/2024/01/03/33.png" alt="33.png"></p>
+<p>找到用户victor</p>
+<p>那就得到wordpree的用户名 victor 密码 follow_the_ippsec</p>
+<p>进入wordpress管理系统<br><img src="https://www.z4a.net/images/2024/01/03/34.png" alt="34.png"><br>找到主题编辑器<br><img src="https://www.z4a.net/images/2024/01/03/35.png" alt="35.png"><br>找到一个可以写入并且保存的地方</p>
+<h3 id="二-渗透测试"><a href="#二-渗透测试" class="headerlink" title="二.渗透测试"></a>二.渗透测试</h3><p>这里可以写一句话木马，也可以建立反弹连接</p>
+<p>kali开启msf</p>
+<p>更新msf</p>
+<p>先 apt-get update</p>
+<p>再 apt-get install metaspolit-framework</p>
+<p>先用msfvenom生成反弹连接的php代码<br><img src="https://www.z4a.net/images/2024/01/03/37.png" alt="37.png"><br>然后把里面的代码，复制，并且保存<br><img src="https://www.z4a.net/images/2024/01/03/38.png" alt="38.png"><br>然后在kali机上监听端口<br><img src="https://www.z4a.net/images/2024/01/03/39.png" alt="39.png"><br>然后我们需要访问这个地址<br><img src="https://www.z4a.net/images/2024/01/03/40.png" alt="40.png"><br>地址 ​​<a target="_blank" rel="noopener" href="http://192.168.200.129/wordpress/wp-content/themes/twentynineteen/secret.php%E2%80%8B">http://192.168.200.129/wordpress/wp-content/themes/twentynineteen/secret.php​</a><br><img src="https://www.z4a.net/images/2024/01/03/41.png" alt="41.png"><br>连接成功<br><img src="https://www.z4a.net/images/2024/01/03/42.png" alt="42.png"><br>下面就是如何提权，然后得到root用户的权限</p>
+<p>看看这个操作系统本身有没有漏洞，可以在msf上可以实现<br><img src="https://www.z4a.net/images/2024/01/03/43.png" alt="43.png"><br>用这个漏洞，可以直接成为root用户，并且也有一个现成的C语言脚本可以利用</p>
+<p>这个文件在 &#x2F;linux&#x2F;local&#x2F;45010.c</p>
+<p>即 &#x2F;usr&#x2F;share&#x2F;exploitdb&#x2F;exploits&#x2F;linux&#x2F;local</p>
+<p>拷贝到&#x2F;home&#x2F;kali目录下<br><img src="https://www.z4a.net/images/2024/01/03/44.png" alt="44.png"><br>编译<br><img src="https://www.z4a.net/images/2024/01/03/45.png" alt="45.png"><br>然后利用meterpreter 的 upload命令，把攻击机的文件传到靶机上面去，选择tmp目录是因为，任何用户都有它的权限<br><img src="https://www.z4a.net/images/2024/01/03/46.png" alt="46.png"><br><img src="https://www.z4a.net/images/2024/01/03/47.png" alt="47.png"><br>但是需要给45010执行的权限</p>
+<p>利用shell，进入shell程序<br><img src="https://www.z4a.net/images/2024/01/03/48.png" alt="48.png"><br>最后执行<br><img src="https://www.z4a.net/images/2024/01/03/49.png" alt="49.png"><br>执行脚本的时候，出现了问题</p>
+<p>那就自己安装一个低版本的kali，编译这个文件再试试(kali-2021.4)</p>
+<p>那么就在这台kali上继续复现了</p>
+<p>然后又失败了，我又安装了，kali-2019，还是失败</p>
+<p>这个时候，需要回去想想是不是，prime1机器的问题了</p>
+<p>我回去看了一下，果然是，内核版本，变了，原因不知道为啥<br><img src="https://www.z4a.net/images/2024/01/03/50.png" alt="50.png"><br>需要重新安装一次 prime<br><img src="https://www.z4a.net/images/2024/01/03/51.png" alt="51.png"><br>现在可以了，用kali 2019 编译的，放在kali 2022上面运行，成功提权<br><img src="https://www.z4a.net/images/2024/01/03/52.png" alt="52.png"><br>进入root，看看关键文件信息<br><img src="https://www.z4a.net/images/2024/01/03/53.png" alt="53.png"><br>有时候，出了问题，不知道错在哪里的时候，一定要回头看看!!!</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E7%BA%B2"><span class="toc-number">1.</span> <span class="toc-text">大纲</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">2.</span> <span class="toc-text">一.信息收集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95"><span class="toc-number">3.</span> <span class="toc-text">二.渗透测试</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&text=靶场实战1-prime1"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&title=靶场实战1-prime1"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&is_video=false&description=靶场实战1-prime1"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=靶场实战1-prime1&body=Check out this article: http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&title=靶场实战1-prime1"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&title=靶场实战1-prime1"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&title=靶场实战1-prime1"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&title=靶场实战1-prime1"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&name=靶场实战1-prime1&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/01/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%981-prime1/&t=靶场实战1-prime1"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+      <div class="footer-left">
+        Copyright &copy;
+        
+        
+        2021-2024
+        Reweber
+      </div>
+      <div class="footer-right">
+        <nav>
+          <ul>
+            <!--
+          --><li><a href="/">Home</a></li><!--
+        --><!--
+          --><li><a href="/archives/">Writing</a></li><!--
+        --><!--
+          --><li><a href="/search/">Search</a></li><!--
+        -->
+          </ul>
+          <ul>
+            
+          </ul>
+        </nav>
+      </div>
+      
+</footer>
+
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
